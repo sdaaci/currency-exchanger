@@ -27,9 +27,6 @@ public class NbpExchangeRateDownloader {
 
                 return new NbpExchangeRateResult(false, "Podałeś nieprawidłowa date", null);
             }
-//            sprawdz status http conn.getResponseCode(). Jezeli status == 400 wtedy utworz nowy obiekt
-//            NbpExchangeRateResult z wartosciami success = false, errorMessage = "Podałeś datę z przyszłości", rate = null
-//            zwróć ten obiekt za pomocą słowa return
 
             if (conn.getResponseCode() == 200)
             {
