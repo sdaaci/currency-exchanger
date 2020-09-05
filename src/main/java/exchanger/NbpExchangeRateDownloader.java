@@ -5,10 +5,59 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.Date;
 
 public class NbpExchangeRateDownloader {
+
+
+    public NbpExchangeRateResult download(String forDate) {
+        try {
+            URL url = new URL("http://api.nbp.pl/api/exchangerates/rates/A/EUR/" + forDate);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Accept", "aplication/json");
+
+            if (conn.getResponseCode() == 400 || conn.getResponseCode() == 404) {
+
+                return new NbpExchangeRateResult(false, "Podałeś nieprawidłowa date", null);
+            }
+//            sprawdz status http conn.getResponseCode(). Jezeli status == 400 wtedy utworz nowy obiekt
+//            NbpExchangeRateResult z wartosciami success = false, errorMessage = "Podałeś datę z przyszłości", rate = null
+//            zwróć ten obiekt za pomocą słowa return
+
+            if (conn.getResponseCode() == 200)
+            {
+                BufferedReader br = new BufferedReader(new InputStreamReader(
+                        (conn.getInputStream())));
+
+                System.out.println("Output from Server .... \n");
+                NbpExchangeRateSeries series = new ObjectMapper().readValue(br.readLine(), NbpExchangeRateSeries.class);
+
+                BigDecimal rate = series.getRates().get(0).getMid();
+
+                return new NbpExchangeRateResult(true, "OK", rate);
+            }
+
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+            return null;
+        }
+
+
+
 
     public static void main(String[] args) {
 
@@ -30,7 +79,9 @@ public class NbpExchangeRateDownloader {
             System.out.println("Output from Server .... \n");
             NbpExchangeRateSeries series = new ObjectMapper().readValue(br.readLine(), NbpExchangeRateSeries.class);
 
-            System.out.println(series.getRates().get(0).getMid());
+            BigDecimal rate = series.getRates().get(0).getMid();
+
+            System.out.println(rate);
 
             conn.disconnect();
 
