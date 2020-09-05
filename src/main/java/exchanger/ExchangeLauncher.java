@@ -13,23 +13,15 @@ public class ExchangeLauncher {
 
         System.out.println("Podaj wartosc w PLN");
         BigDecimal pln = scan.nextBigDecimal();
+        scan.nextLine();
 
         System.out.println("Podaj datę kursu yyyy-mm-dd");
         String date = scan.nextLine();
 
 
+        BigDecimal exchange = new CurrencyExchangeService().exchange(pln, date);
 
-
-//        Cel zadania: Utworzenie mechanizmu do wymiany walut na podstawie kursu z NBP (Narodowy Bank Polski) na dany dzień.
-//                Widok: widok tworzymy za pomocą JavaFX lub dane wprowadzamy przy użyciu obiektu Scanner:
-//• Input do wprowadzania wartości w złotówkach,
-//• Input do wyświetlenia wartości w euro,
-//• Input typu date, w którym wprowadzamy datę kursu
-//• Przycisk „Przelicz na EURO”
-
-
-
-
+        System.out.println(exchange);
 
     }
 }
