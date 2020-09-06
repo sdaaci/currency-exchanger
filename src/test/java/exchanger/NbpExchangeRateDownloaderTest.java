@@ -1,7 +1,11 @@
 package exchanger;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,10 +21,10 @@ class NbpExchangeRateDownloaderTest {
 
         LocalDate givenExchangeDate = LocalDate.of(2069, 8, 10);
 
-        NbpExchangeRateResult expected = new NbpExchangeRateResult(false, "Podałeś date z przyszłości", null);
+        NbpExchangeRateResult expected = new NbpExchangeRateResult(false, "Podałeś nieprawidłowa date", null);
 
         //when
-        NbpExchangeRateResult actual = subject.download(givenExchangeDate.toString());
+        NbpExchangeRateResult actual = subject.download(givenExchangeDate);
         //then
 
         assertThat(actual)
@@ -28,4 +32,19 @@ class NbpExchangeRateDownloaderTest {
                 .isEqualTo(expected);
     }
 
+    @Test
+    public void shouldReturnExchangeTestCorrect() {
+        //given
+
+        LocalDate givenExchangeDate = LocalDate.of(2020, 9, 4);
+        NbpExchangeRateResult expected = new NbpExchangeRateResult(true, "OK", new BigDecimal("4.4508"));
+
+        //when
+        NbpExchangeRateResult actual = subject.download(givenExchangeDate);
+        //then
+
+        assertThat(actual)
+                .usingRecursiveComparison()
+                .isEqualTo(expected);
+    }
 }

@@ -11,14 +11,14 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.Date;
+
 
 public class NbpExchangeRateDownloader {
 
 
-    public NbpExchangeRateResult download(String forDate) {
+    public NbpExchangeRateResult download(LocalDate forDate) {
         try {
-            URL url = new URL("http://api.nbp.pl/api/exchangerates/rates/A/EUR/" + forDate);
+            URL url = new URL("http://api.nbp.pl/api/exchangerates/rates/A/EUR/" + forDate.toString());
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "aplication/json");
