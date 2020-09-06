@@ -88,4 +88,13 @@ public class NbpExchangeRateDownloader {
         }
 
     }
+
+    public boolean isCorrectDate(LocalDate date) throws IOException {
+        URL url = new URL("http://api.nbp.pl/api/exchangerates/rates/A/EUR/" + date);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Accept", "application/json");
+
+        return conn.getResponseCode() == 200;
+    }
 }

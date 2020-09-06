@@ -1,5 +1,6 @@
 package exchanger;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -11,6 +12,7 @@ public class ExchangeLauncher {
 
     public static void main(String[] args) {
 
+        CurrencyExchangeService currencyExchangeService = new CurrencyExchangeService();
 
         BigDecimal pln = null;
 
@@ -46,13 +48,17 @@ public class ExchangeLauncher {
                     System.out.println("Podana data jest z przyszlosci");
                     continue;
                 }
+                if(!currencyExchangeService.isCorrectDate(parsedDate)) {
+                    System.out.println("Podana data jest niepoprawna");
+                    continue;
+                }
                 correctDate = false;
 
-            } catch (DateTimeParseException e) {
+            } catch (DateTimeParseException | IOException e) {
                 System.out.println("Nieprawidlowy format. Podaj date w formacie yyyy-mm-dd");
             }
         }
-        BigDecimal exchange = new CurrencyExchangeService().exchange(pln, parsedDate, currency);
+        BigDecimal exchange = currencyExchangeService.exchange(pln, parsedDate, currency);
         System.out.println(exchange +" " +currency);
     }
 }
