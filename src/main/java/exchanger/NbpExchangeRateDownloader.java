@@ -16,9 +16,9 @@ import java.time.LocalDate;
 public class NbpExchangeRateDownloader {
 
 
-    public NbpExchangeRateResult download(LocalDate forDate) {
+    public NbpExchangeRateResult download(LocalDate forDate, String currency) {
         try {
-            URL url = new URL("http://api.nbp.pl/api/exchangerates/rates/A/EUR/" + forDate.toString());
+            URL url = new URL("http://api.nbp.pl/api/exchangerates/rates/A/" + currency + "/" + forDate.toString());
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "aplication/json");

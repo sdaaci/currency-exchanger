@@ -20,11 +20,11 @@ class NbpExchangeRateDownloaderTest {
         //given
 
         LocalDate givenExchangeDate = LocalDate.of(2069, 8, 10);
-
         NbpExchangeRateResult expected = new NbpExchangeRateResult(false, "Podałeś nieprawidłowa date", null);
+        String givenCurrency = "EUR";
 
         //when
-        NbpExchangeRateResult actual = subject.download(givenExchangeDate);
+        NbpExchangeRateResult actual = subject.download(givenExchangeDate, givenCurrency);
         //then
 
         assertThat(actual)
@@ -38,9 +38,9 @@ class NbpExchangeRateDownloaderTest {
 
         LocalDate givenExchangeDate = LocalDate.of(2020, 9, 4);
         NbpExchangeRateResult expected = new NbpExchangeRateResult(true, "OK", new BigDecimal("4.4508"));
-
+        String givenCurrency = "EUR";
         //when
-        NbpExchangeRateResult actual = subject.download(givenExchangeDate);
+        NbpExchangeRateResult actual = subject.download(givenExchangeDate, givenCurrency);
         //then
 
         assertThat(actual)

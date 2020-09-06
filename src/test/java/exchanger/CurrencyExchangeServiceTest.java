@@ -17,9 +17,10 @@ class CurrencyExchangeServiceTest {
         //given
         LocalDate givenExchangeDate = LocalDate.of(2020, 9, 4);
         BigDecimal givenBigDecimalValue = new BigDecimal("500");
+        String givenCurrency= "EUR";
 
         //when
-        BigDecimal result = subject.exchange(givenBigDecimalValue, givenExchangeDate);
+        BigDecimal result = subject.exchange(givenBigDecimalValue, givenExchangeDate, givenCurrency);
 
         //then
         assertThat(result).isEqualTo(new BigDecimal("112.34"));

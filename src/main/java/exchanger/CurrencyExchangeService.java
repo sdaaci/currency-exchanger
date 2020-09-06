@@ -9,9 +9,9 @@ public class CurrencyExchangeService {
 
     NbpExchangeRateDownloader NBPDownloader = new NbpExchangeRateDownloader();
 
-    public BigDecimal exchange(BigDecimal value, LocalDate fordate) {
+    public BigDecimal exchange(BigDecimal value, LocalDate fordate, String currency) {
 
-        NbpExchangeRateResult download = NBPDownloader.download(fordate);
+        NbpExchangeRateResult download = NBPDownloader.download(fordate, currency);
 
 
         if (download.isSuccess()) {
