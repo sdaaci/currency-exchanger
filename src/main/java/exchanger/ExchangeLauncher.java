@@ -35,7 +35,7 @@ public class ExchangeLauncher {
                 scan.nextLine();
             }
         }
-        System.out.println("Podaj walute do przeliczenia" +currency);
+        System.out.println("Podaj walute do przeliczenia " +currency);
 
         System.out.println("Podaj datę kursu yyyy-mm-dd");
         LocalDate parsedDate = null;
@@ -49,7 +49,7 @@ public class ExchangeLauncher {
                     continue;
                 }
                 if(!currencyExchangeService.isCorrectDate(parsedDate)) {
-                    System.out.println("Podana data jest niepoprawna");
+                    System.out.println("Podana data jest niepoprawna. Brak kursu wymiany w tym dniu.");
                     continue;
                 }
                 correctDate = false;
